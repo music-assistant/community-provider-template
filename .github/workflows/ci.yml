@@ -46,4 +46,4 @@ jobs:
     uses: music-assistant/community-catalog/.github/workflows/check-provider.yml@main
     with:
       folder: example_music
-      line: nightly
+      server-line: nightly
