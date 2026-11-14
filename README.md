@@ -17,9 +17,9 @@ and CI. Click **Use this template** on GitHub to start your own.
 > - no Music Assistant release has the community catalog: the server is pinned to a development
 >   commit (see [Keep up with the server](#keep-up-with-the-server));
 > - the test fixture in `tests/conftest.py` moves into the server package;
-> - the registry is not published: it does not take admissions, check releases or run its
->   nightly test, and the catalog checks that CI calls (`catalog` in `.github/workflows/ci.yml`)
->   do not exist.
+> - the registry does not take admissions, check releases or run its nightly test, and the
+>   catalog checks that CI calls (`catalog` in `.github/workflows/ci.yml`) fail until a nightly
+>   build of the server has the community catalog.
 
 ## The rules
 

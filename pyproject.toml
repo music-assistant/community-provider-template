@@ -9,7 +9,7 @@ dependencies = []
 [dependency-groups]
 dev = [
   # the server this provider is developed and tested against
-  "music-assistant @ git+https://github.com/music-assistant/server@bbb4692a60f7568d80372dfbcee16d110114ef96",
+  "music-assistant @ git+https://github.com/music-assistant/server@71dfa73ee1744f45277b009f51c6a4f3445befd9",
   # NOT FINAL: the server needs these to start but its package does not list them yet; they
   # follow the server's requirements_all.txt and go once the package lists them
   "aiosendspin[server]==10.3.0",
