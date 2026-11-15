@@ -14,18 +14,20 @@ and CI. Click **Use this template** on GitHub to start your own.
 
 ## The rules
 
-The catalog declines a provider at admission, and blocks it when it is found later, for:
+The community catalog declines a provider at admission, and blocks it when it is found later,
+for:
 
 - music the user has no right to: getting around an account, a subscription tier or a region, or
   a source that offers music without the permission of its rights holders;
 - getting around copy protection;
-- downloading or exporting music to keep it (a cache used for playback is fine);
-- harmful behaviour: sending the user's data elsewhere, loading code from somewhere else while it
-  runs, or doing things its description does not mention;
-- a provider whose only job is to load other providers or lists of sources from third parties.
+- downloading or exporting music to keep it (a temporary cache used only for playback is fine);
+- harmful behaviour: sending the user's data anywhere but the service it connects to, loading
+  code from somewhere else while it runs, or doing things its description does not mention;
+- a provider that mainly exists to load other providers, or lists of sources from third parties,
+  from outside the community catalog.
 
-A small audience, an unofficial API used with the user's own account, reading a service's web
-pages, and free public content in the quality a service offers without a subscription are all
+A small audience, an unofficial API used with the user's own account, reading a service's public
+web pages, and free public content in the quality a service offers without a subscription are all
 fine, at the user's own risk.
 
 A provider that talks to a music service also behaves as a good client of it: put a throttler in
@@ -39,12 +41,15 @@ What a release has to look like:
 
 - the provider is in a folder named after its `domain`, the internal name in `manifest.json`;
   a domain the server already uses is refused;
-- the release is a GitHub release whose tag is the version, such as `v1.2.0`;
+- the release is a GitHub release, not a pre-release, whose tag is the version with or without
+  `v`, such as `v1.2.0`;
 - `requirements` in `manifest.json` are package names with version specifiers, such as
-  `aiohttp-retry==2.9.1`: no URLs, markers or options;
+  `aiohttp-retry==2.9.1`: no URLs, markers or options. They come as wheels for the Python version
+  and platform of the server: a package that only comes as source cannot be installed;
 - `manifest.json` is plain JSON: no `NaN` or `Infinity`, and no key twice;
-- `icon.svg` is at most 5 KB and only draws (the
-  [icon rules](https://github.com/music-assistant/community-catalog#the-icon)).
+- `icon.svg` is optional, at most 5 KB and only draws (the
+  [icon rules](https://github.com/music-assistant/community-catalog#the-icon)); an icon that does
+  not pass is left out.
 
 ## From template to a running provider
 
@@ -65,10 +70,11 @@ Python, no ffmpeg, on Windows, macOS or Linux.
    `pyproject.toml` after the domain, so run `uv lock` next. Then delete `docs/` and
    `scripts/rename.py`; they belong to the template.
 4. In `my_service/manifest.json` and `strings.json`, set the name and description, your GitHub
-   handle in `codeowners` and the address of your documentation. Add `"support_url"` when you take
-   questions somewhere else than the issues of your repository. `stage` says how ready the provider
-   is: `alpha`, `beta`, `stable` or `experimental`, and later `unmaintained` or `deprecated` (a
-   deprecated provider can no longer be added). Without it, the server takes `stable`.
+   handle in `codeowners` and the address of your documentation. Questions go to your repository;
+   add an `https://` link as `"support_url"` to take them elsewhere, such as its issues. `stage`
+   says how ready the provider is: `alpha`, `beta`, `stable` or `experimental`, and later
+   `unmaintained` or `deprecated` (a deprecated provider can no longer be added). Without it, the
+   server takes `stable`.
 5. Run the task **Run Music Assistant** (Terminal > Run Task), or `scripts/run.sh` in the
    terminal. The server starts in dev mode and loads the provider from this repository. Press F5
    instead to run it in the debugger.
@@ -138,7 +144,9 @@ the icon without a server. `tests/test_provider.py` boots a real server with thi
 its local provider folder, adds the provider and asks it for a track. Add your own tests next to
 them. The fixture comes with the server: `pytest_plugins = ["music_assistant.testing"]` in
 `tests/conftest.py` gives a fixture `mass`, a started server in dev mode with your repository as
-its local provider folder. Lint, type check and spelling run on every commit once
+its local provider folder. That server announces nothing on the network and listens only on the
+local machine; what your provider asks of its service still goes out, so replace that in a test
+where you need to. Lint, type check and spelling run on every commit once
 `uv run pre-commit install` has run (the container does that), and in CI.
 
 ## Keep up with the server
@@ -149,27 +157,29 @@ server, change that line and run `uv lock`. The two packages listed under it are
 of the server's Sendspin provider, which the server starts at every boot; keep them at the
 versions in its `music_assistant/providers/sendspin/manifest.json`.
 
-The registry tests the newest version of every listed provider against each supported server
-line (the current stable release, the beta and the nightly) every night. When your provider stops
-loading on one of them, servers of that line fall back to the last version that still passed, and
+Every night the registry tests the newest versions of every listed provider against each server line
+it tests (the nightly, the beta and the newest stable line). When your provider stops loading on one
+of them, servers of that line that run it switch to the newest version that still passes there, and
 you get an issue on your repository with the output. With a beta of several weeks you usually know
 well before a stable release.
 
 ## Release
 
-Publish a GitHub release whose tag is the new version, such as `v1.2.0`. That is all: the registry
-picks up new releases every night, runs its checks and offers the version to the servers it passed
-for. When it fails a check, you get an issue with the reason. Pre-releases are ignored; to offer a
-version to the nightly only, release it normally and it ends up where it passes.
+Publish a GitHub release whose tag is the new version, such as `v1.2.0`. That is all: every night
+the registry takes the most recently published release, when it has not seen it before, runs its
+checks and offers the version to the servers it passed for. Of two releases published before it
+runs, only the newer one is taken. When it fails a check, you get an issue with the reason.
+Pre-releases are ignored; to offer a version to the nightly only, release it normally and it ends up
+where it passes.
 
-## Join the catalog
+## Join the community catalog
 
 Open a pull request on the [registry](https://github.com/music-assistant/community-catalog) that
-adds your provider; its README tells how. It needs a public repository with an open source
-licence, a release that passes the checks, and a free domain. Whoever opens the pull request, and
-every maintainer it names, must own the repository or be a code owner in the manifest of its
-latest release. A person then decides once about what the provider does, against the rules above.
-After that every release is checked and offered without anyone looking at it.
+adds your provider; its README tells how. It needs a public repository with an open source licence,
+a release that passes the checks, and a domain of its own. Whoever opens the pull request, and every
+maintainer it names, must own the repository or be a code owner in the manifest of its latest
+release. A person then decides once about what the provider does, against the rules above. After
+that later releases are checked and offered without anyone looking at them.
 
 ## Licence
 
