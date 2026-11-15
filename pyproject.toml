@@ -8,10 +8,10 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  # the server this provider is developed and tested against
+  # the server version this provider is developed against: a release tag or a commit after the @;
+  # change it and run `uv lock` to move to another
   "music-assistant @ git+https://github.com/music-assistant/server@71dfa73ee1744f45277b009f51c6a4f3445befd9",
-  # NOT FINAL: the server needs these to start but its package does not list them yet; they
-  # follow the server's requirements_all.txt and go once the package lists them
+  # the server needs these to start; they follow its requirements_all.txt
   "aiosendspin[server]==10.3.0",
   "av==19.0.2",
   "hass-client==1.4.1",

@@ -1,8 +1,8 @@
 """
 A server to test the provider against.
 
-NOT FINAL: the Music Assistant server package is going to ship this fixture itself; this file
-then goes. Until then it holds the smallest fixture that boots a real server for a test.
+The smallest fixture that boots a real server for a test. This file belongs to the provider:
+change it as its tests need.
 """
 
 from collections.abc import AsyncGenerator

@@ -1,9 +1,6 @@
 Building a provider
 ==================================
 
-> **Draft** for developers.music-assistant.io. Parts marked *Not there yet* describe what is
-> planned and does not exist today.
-
 A provider adds something to Music Assistant: a music source, support for a kind of player, a
 metadata source or a plugin. A provider can live in two places, and what each asks of you differs.
 
@@ -31,7 +28,7 @@ has the details.
 A community provider lives in your own repository, with your own documentation, support and
 releases. Servers install it from the community catalog, a list the project keeps in the
 [registry](https://github.com/music-assistant/community-catalog). Users see the community catalog
-only after an administrator switches it on and accepts that everything in it is used at their own
+only after an administrator enables it and accepts that everything in it is used at their own
 risk.
 
 The catalog asks less than the server repository, and the project supports nothing in it:
@@ -43,8 +40,6 @@ The catalog asks less than the server repository, and the project supports nothi
 
 A person decides once, at admission, about what the provider does. The code is not reviewed, and
 every later release reaches users without anyone looking at it.
-
-*Not there yet:* the registry does not take admissions, check releases or run its nightly test.
 
 ## The red lines
 
@@ -73,9 +68,9 @@ real server, a development container and CI. Its README takes you from **Use thi
 provider running in a server in a few minutes, with Docker as the only requirement, on Windows,
 macOS or Linux.
 
-The template pins the server version you develop against, installed from its tagged source, which
-gives you type checking, completion in your editor and the test fixtures. *Not there yet:* no
-release has the community catalog, so the template pins a development commit.
+The template pins the server version you develop against, at a release tag or a commit, and
+installs it from its source, which gives you type checking, completion in your editor and the test
+fixture.
 
 What a release has to look like:
 
@@ -96,8 +91,8 @@ server's own packages and never replace one; a provider whose requirements clash
 
 `uv run pytest` runs the tests of the template: quick checks of the manifest, the texts, the
 requirements and the icon, and a test that boots a real server with your repository as its local
-provider folder in dev mode. *Not there yet:* the fixture that boots the server is part of the
-template; it moves into the server package.
+provider folder in dev mode. The fixture that boots the server is in `tests/conftest.py` and is
+yours to change.
 
 `scripts/run.sh`, or the **Run Music Assistant** task in VS Code, starts a server in dev mode that
 loads your provider, so you can try it in the app. Outside the container this is:
@@ -110,16 +105,7 @@ Only a server in dev mode loads providers from a local folder.
 
 CI runs the lint, the type check and your tests, and calls a workflow of the registry that runs the
 same checks the catalog runs on a release: the manifest, the requirements against a server line,
-and loading the provider in the server image of that line. The registry also reads every release
-for the red lines; that happens only in the registry. *Not there yet:* the registry's workflow is
-not published.
-
-### On Home Assistant and on Docker
-
-*Not there yet:* the Music Assistant Dev app for Home Assistant gets a `provider_repo` option,
-written like its `server_repo` option, to run a provider from a repository, a branch or a pull
-request. A dev image on top of the nightly image does the same on Docker. Both let you, or someone
-who tests for you, run your provider on a real setup without a development environment.
+and loading the provider in the server image of that line.
 
 ## What the nightly test reports
 
@@ -136,5 +122,3 @@ beta and the nightly.
 With a beta that runs for several weeks, you usually know about a problem well before a stable
 release reaches your users. To support the stable release and follow the nightly at the same time,
 release two versions; each one is offered where it passes.
-
-*Not there yet:* the registry does not run these tests.

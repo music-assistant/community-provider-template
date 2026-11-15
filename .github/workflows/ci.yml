@@ -38,9 +38,8 @@ jobs:
       - run: uv sync --locked
       - run: uv run pytest
 
-  # NOT FINAL: the registry publishes this workflow with the checks every release gets (the
-  # manifest, the requirements against a server line, loading in the server image); its inputs
-  # may still change
+  # the checks every release gets in the catalog: the manifest, the requirements against a server
+  # line and loading the provider in the server image of that line
   catalog:
     name: Catalog checks
     uses: music-assistant/community-catalog/.github/workflows/check-provider.yml@main

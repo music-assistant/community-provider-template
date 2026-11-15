@@ -12,15 +12,6 @@ This template holds one small music source, `example_music`, that plays a few te
 an account or network. It comes with a test that runs it in a real server, a development container
 and CI. Click **Use this template** on GitHub to start your own.
 
-> **Not there yet.** Parts of the community catalog are still being built. Everything in this
-> repository that depends on them is marked *Not final* where it appears:
-> - no Music Assistant release has the community catalog: the server is pinned to a development
->   commit (see [Keep up with the server](#keep-up-with-the-server));
-> - the test fixture in `tests/conftest.py` moves into the server package;
-> - the registry does not take admissions, check releases or run its nightly test, and the
->   catalog checks that CI calls (`catalog` in `.github/workflows/ci.yml`) fail until a nightly
->   build of the server has the community catalog.
-
 ## The rules
 
 The catalog declines a provider at admission, and blocks it when it is found later, for:
@@ -128,22 +119,19 @@ everything else. That has consequences:
 
     uv run pytest
 
-`tests/test_files.py` checks the manifest, the texts, the requirements and the icon without a
-server. `tests/test_provider.py` boots a real server with this repository as its local provider
-folder, adds the provider and asks it for a track. Add your own tests next to them; the `mass`
-fixture gives a started server. Lint and type check run on every commit once
-`uv run pre-commit install` has run (the container does that), and in CI.
-
-*Not final:* the `mass` fixture in `tests/conftest.py` is going to ship with the server package;
-this file then goes.
+`tests/test_files.py` checks the manifest, the texts and their translations, the requirements and
+the icon without a server. `tests/test_provider.py` boots a real server with this repository as
+its local provider folder, adds the provider and asks it for a track. Add your own tests next to
+them; the `mass` fixture in `tests/conftest.py` gives a started server, and that file is yours to
+change. Lint and type check run on every commit once `uv run pre-commit install` has run (the
+container does that), and in CI.
 
 ## Keep up with the server
 
 The server version you develop against is set in **one place**: the `music-assistant` line in
-`pyproject.toml`. *Not final:* until a release has the community catalog it points at a development
-commit; it then points at a release tag, such as `@2.11.0`. To move to a newer server, change that
-line and run `uv lock`. The three packages listed under it are needed by the server but not yet
-listed by its package; they go once it lists them.
+`pyproject.toml`, with a release tag or a commit of the server after the `@`. To move to a newer
+server, change that line and run `uv lock`. The three packages listed under it are needed by the
+server to start; keep them at the versions of the server's `requirements_all.txt`.
 
 The registry tests the newest version of every listed provider against each supported server
 line (the current stable release, the beta and the nightly) every night. When your provider stops
@@ -160,9 +148,9 @@ version to the nightly only, release it normally and it ends up where it passes.
 
 ## Join the catalog
 
-*Not final:* the registry does not take admissions. Once it does, you open a pull request on the
-registry that adds your provider; its README tells how. It needs a public repository with an open
-source licence, a release that passes the checks, and a free domain. A person then decides once
+Open a pull request on the [registry](https://github.com/music-assistant/community-catalog) that
+adds your provider; its README tells how. It needs a public repository with an open source
+licence, a release that passes the checks, and a free domain. A person then decides once
 about what the provider does, against the rules above. After that every release is checked and
 offered without anyone looking at it.
 
