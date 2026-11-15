@@ -28,4 +28,3 @@ repos:
         entry: uv run codespell
         language: system
         types: [text]
-        exclude: ^(uv\.lock|LICENSE)$

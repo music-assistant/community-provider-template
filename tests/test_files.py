@@ -20,6 +20,7 @@ REQUIREMENT = re.compile(
     r"(\s*,\s*(==|>=|<=|~=|!=|<|>)\s*[A-Za-z0-9.*+!_-]+)*)?"
 )
 MAX_ICON_BYTES = 5 * 1024
+SERVER_TRANSLATIONS = Path(providers.__file__).parents[1] / "translations"
 SVG = "{http://www.w3.org/2000/svg}"
 
 
@@ -54,8 +55,14 @@ def test_requirements_are_package_names() -> None:
 
 
 def test_texts_are_valid() -> None:
-    """The texts are plain JSON."""
-    _read_json(PROVIDER / "strings.json")
+    """The texts are plain JSON, translated only into languages the server has."""
+    texts = _keys(_read_json(PROVIDER / "strings.json"))
+    # strings.json holds the English texts; the server ignores a translations/en.json
+    languages = {path.stem for path in SERVER_TRANSLATIONS.glob("*.json")} - {"en"}
+    for path in (PROVIDER / "translations").glob("*.json"):
+        assert path.stem in languages, f"the server has no translations into {path.stem}"
+        extra = _keys(_read_json(path)) - texts
+        assert not extra, f"{path.name} has texts that strings.json does not have: {extra}"
 
 
 def test_icon_only_draws() -> None:
@@ -85,6 +92,13 @@ def _manifest() -> dict[str, Any]:
     manifest = _read_json(PROVIDER / "manifest.json")
     assert isinstance(manifest, dict)
     return manifest
+
+
+def _keys(texts: Any, prefix: str = "") -> set[str]:
+    """Return the keys of nested texts, joined with dots."""
+    if not isinstance(texts, dict):
+        return {prefix}
+    return {key for name, value in texts.items() for key in _keys(value, f"{prefix}{name}.")}
 
 
 def _read_json(path: Path) -> Any:

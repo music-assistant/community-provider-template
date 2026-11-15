@@ -86,7 +86,8 @@ newer: `uv sync`, then `scripts/run.sh`.
 |---|---|
 | `example_music/__init__.py` | The provider: `setup()` and the provider class. |
 | `example_music/manifest.json` | Its type, domain, name, maintainers and requirements. |
-| `example_music/strings.json` | Its texts in English: the name, the description and the labels of its settings. Translations go in `translations/<language>.json` next to it. |
+| `example_music/strings.json` | Its texts in English: the name, the description and the labels of its settings. |
+| `example_music/translations/` | Its texts in other languages, here in Dutch. |
 | `example_music/icon.svg` | Its icon. Optional: `icon_dark.svg` and `icon_monochrome.svg`. |
 | `tests/` | The tests. |
 | `scripts/run.sh` | Starts the server with the provider. |
@@ -99,6 +100,12 @@ annotated template for each type of provider (`_demo_music_provider`, `_demo_pla
 that lists every method you can implement, and the built-in providers there are full examples.
 When the user has to enter something to set up the provider, such as a login, add a
 `setup_flow.py`: see [provider setup flows](https://developers.music-assistant.io/setup-flows/).
+
+A translation is named after a language the server has, such as `nl.json` or `pt_BR.json` (the
+[server's translations](https://github.com/music-assistant/server/tree/dev/music_assistant/translations)
+list them). English lives in `strings.json`; a `translations/en.json` is ignored. Only the texts in
+`strings.json` can be translated, such as the name, the description and the labels of the
+settings; the names of artists, albums and tracks cannot.
 
 ## Where your code runs
 
