@@ -38,8 +38,11 @@ The catalog asks less than the server repository, and the project supports nothi
 - a domain that no built-in provider uses;
 - a provider that crosses none of the red lines below.
 
-A person decides once, at admission, about what the provider does. The code is not reviewed, and
-every later release reaches users without anyone looking at it.
+You ask for admission with a pull request on the registry that adds your provider; its README
+tells how. Whoever opens it, and every maintainer it names, must own the repository or be a code
+owner in the manifest of its latest release. A person decides once, at admission, about what the
+provider does. The code is not reviewed, and every later release reaches users without anyone
+looking at it.
 
 ## The red lines
 
@@ -55,7 +58,9 @@ The catalog declines a provider at admission, and blocks it when it is found lat
 
 Allowed, at the user's own risk: a small audience, an unofficial API used with the user's own
 account, reading a service's web pages, free public content in the quality a service offers
-without a subscription, and code that would not pass a review for the server.
+without a subscription, and code that would not pass a review for the server. The
+[community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md)
+say it in full.
 
 A blocked provider is not loaded by any server; its users keep their settings and library. A
 blocked version is skipped the same way.
@@ -108,9 +113,11 @@ Only a server in dev mode loads providers from a local folder.
 
 ### On your pull requests
 
-CI runs the lint, the type check and your tests, and calls a workflow of the registry that runs the
-same checks the catalog runs on a release: the manifest, the requirements against a server line,
-and loading the provider in the server image of that line.
+CI runs the lint, the type check, the spelling check and your tests, and calls the registry's
+reusable workflow
+[`check-provider.yml`](https://github.com/music-assistant/community-catalog/blob/main/.github/workflows/check-provider.yml),
+which runs the same checks the catalog runs on a release: the manifest, the requirements against
+a server line, and loading the provider in the server image of that line.
 
 ## What the nightly test reports
 
@@ -126,4 +133,5 @@ beta and the nightly.
 
 With a beta that runs for several weeks, you usually know about a problem well before a stable
 release reaches your users. To support the stable release and follow the nightly at the same time,
-release two versions; each one is offered where it passes.
+release two versions on different days: the registry runs every night and takes only the newest
+release published since its last run. Each version is then offered where it passes.

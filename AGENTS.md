@@ -19,7 +19,8 @@ community catalog; the README has the rules of the catalog and how to develop, t
 
 ## How to work here
 
-- `uv run pytest`, `uv run ruff check .`, `uv run ruff format .` and `uv run mypy` must pass.
+- `uv run pytest`, `uv run ruff check .`, `uv run ruff format .`, `uv run mypy` and
+  `uv run codespell` must pass.
 - Never block the event loop; wrap blocking calls in `asyncio.to_thread`.
 - Requirements in `manifest.json` are package names with version specifiers only.
 - Follow the server's code style: Sphinx docstrings with `:param:`, the summary of a multi-line

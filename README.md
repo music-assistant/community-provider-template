@@ -166,9 +166,10 @@ version to the nightly only, release it normally and it ends up where it passes.
 
 Open a pull request on the [registry](https://github.com/music-assistant/community-catalog) that
 adds your provider; its README tells how. It needs a public repository with an open source
-licence, a release that passes the checks, and a free domain. A person then decides once
-about what the provider does, against the rules above. After that every release is checked and
-offered without anyone looking at it.
+licence, a release that passes the checks, and a free domain. Whoever opens the pull request, and
+every maintainer it names, must own the repository or be a code owner in the manifest of its
+latest release. A person then decides once about what the provider does, against the rules above.
+After that every release is checked and offered without anyone looking at it.
 
 ## Licence
 
