@@ -66,7 +66,9 @@ Python, no ffmpeg, on Windows, macOS or Linux.
    `scripts/rename.py`; they belong to the template.
 4. In `my_service/manifest.json` and `strings.json`, set the name and description, your GitHub
    handle in `codeowners` and the address of your documentation. Add `"support_url"` when you take
-   questions somewhere else than the issues of your repository.
+   questions somewhere else than the issues of your repository. `stage` says how ready the provider
+   is: `alpha`, `beta`, `stable` or `experimental`, and later `unmaintained` or `deprecated` (a
+   deprecated provider can no longer be added). Without it, the server takes `stable`.
 5. Run the task **Run Music Assistant** (Terminal > Run Task), or `scripts/run.sh` in the
    terminal. The server starts in dev mode and loads the provider from this repository. Press F5
    instead to run it in the debugger.
@@ -106,6 +108,9 @@ A translation is named after a language the server has, such as `nl.json` or `pt
 list them). English lives in `strings.json`; a `translations/en.json` is ignored. Only the texts in
 `strings.json` can be translated, such as the name, the description and the labels of the
 settings; the names of artists, albums and tracks cannot.
+
+The server measures the loudness of what it plays and adjusts it, unless the provider delivers its
+own level and says so by returning `True` from `delivers_normalized_audio`, as test tones do.
 
 ## Where your code runs
 
