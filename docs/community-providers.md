@@ -91,8 +91,13 @@ server's own packages and never replace one; a provider whose requirements clash
 
 `uv run pytest` runs the tests of the template: quick checks of the manifest, the texts, the
 requirements and the icon, and a test that boots a real server with your repository as its local
-provider folder in dev mode. The fixture that boots the server is in `tests/conftest.py` and is
-yours to change.
+provider folder in dev mode. The fixture comes with the server:
+`pytest_plugins = ["music_assistant.testing"]` in `tests/conftest.py` gives a fixture `mass`, a
+started server in dev mode with your repository as its local provider folder, kept off the
+network. It needs pytest-asyncio with `asyncio_mode = "auto"`, and next to the server the
+requirements of its Sendspin provider (`aiosendspin[server]` and `av`, at the versions in the
+server's `music_assistant/providers/sendspin/manifest.json`), which the server starts at every
+boot. The template has all of this in place.
 
 `scripts/run.sh`, or the **Run Music Assistant** task in VS Code, starts a server in dev mode that
 loads your provider, so you can try it in the app. Outside the container this is:

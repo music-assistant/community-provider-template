@@ -136,16 +136,18 @@ everything else. That has consequences:
 `tests/test_files.py` checks the manifest, the texts and their translations, the requirements and
 the icon without a server. `tests/test_provider.py` boots a real server with this repository as
 its local provider folder, adds the provider and asks it for a track. Add your own tests next to
-them; the `mass` fixture in `tests/conftest.py` gives a started server, and that file is yours to
-change. Lint and type check run on every commit once `uv run pre-commit install` has run (the
-container does that), and in CI.
+them. The fixture comes with the server: `pytest_plugins = ["music_assistant.testing"]` in
+`tests/conftest.py` gives a fixture `mass`, a started server in dev mode with your repository as
+its local provider folder. Lint, type check and spelling run on every commit once
+`uv run pre-commit install` has run (the container does that), and in CI.
 
 ## Keep up with the server
 
 The server version you develop against is set in **one place**: the `music-assistant` line in
 `pyproject.toml`, with a release tag or a commit of the server after the `@`. To move to a newer
-server, change that line and run `uv lock`. The three packages listed under it are needed by the
-server to start; keep them at the versions of the server's `requirements_all.txt`.
+server, change that line and run `uv lock`. The two packages listed under it are the requirements
+of the server's Sendspin provider, which the server starts at every boot; keep them at the
+versions in its `music_assistant/providers/sendspin/manifest.json`.
 
 The registry tests the newest version of every listed provider against each supported server
 line (the current stable release, the beta and the nightly) every night. When your provider stops

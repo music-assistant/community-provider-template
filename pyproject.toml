@@ -10,11 +10,11 @@ dependencies = []
 dev = [
   # the server version this provider is developed against: a release tag or a commit after the @;
   # change it and run `uv lock` to move to another
-  "music-assistant @ git+https://github.com/music-assistant/server@71dfa73ee1744f45277b009f51c6a4f3445befd9",
-  # the server needs these to start; they follow its requirements_all.txt
+  "music-assistant @ git+https://github.com/music-assistant/server@1c8a63308dfed7f4f940fa6314bf4c2adf56b44b",
+  # the requirements of the server's Sendspin provider, which it starts at every boot; they follow
+  # music_assistant/providers/sendspin/manifest.json of the server
   "aiosendspin[server]==10.3.0",
   "av==19.0.2",
-  "hass-client==1.4.1",
   "codespell==2.4.3",
   "mypy==2.3.0",
   "pre-commit==4.6.2",
