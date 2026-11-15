@@ -61,7 +61,9 @@ Python, no ffmpeg, on Windows, macOS or Linux.
        uv run python scripts/rename.py my_service
 
    This renames the folder and sets the domain in `manifest.json`, the tests and the CI. A test
-   fails when these disagree, so a rename by hand is caught.
+   fails when these disagree, so a rename by hand is caught. It also names the project in
+   `pyproject.toml` after the domain, so run `uv lock` next. Then delete `docs/` and
+   `scripts/rename.py`; they belong to the template.
 4. In `my_service/manifest.json` and `strings.json`, set the name and description, your GitHub
    handle in `codeowners` and the address of your documentation. Add `"support_url"` when you take
    questions somewhere else than the issues of your repository.

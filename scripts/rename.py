@@ -1,5 +1,5 @@
 """
-Give the provider its own domain: rename its folder and set the domain where it is used.
+Give the provider its own domain: rename its folder, set the domain and name the project.
 
 Run it once, from the root of the repository:
 
@@ -19,6 +19,10 @@ PLACES = {
     "tests/__init__.py": 'DOMAIN = "{}"\n',
     ".github/workflows/ci.yml": "folder: {}\n",
 }
+# the project name in pyproject.toml, which becomes the domain with dashes
+PROJECT_NAME = re.compile(r'^(\[project\]\nname = )".*"$', re.MULTILINE)
+# the part of the comment in tests/__init__.py that points to this script
+SCRIPT_NOTE = "; scripts/rename.py changes it"
 
 
 def main() -> int:
@@ -44,10 +48,20 @@ def main() -> int:
             print(f"{path} does not hold {before.strip()!r} once; nothing was changed")
             return 1
         changed[file] = content.replace(before, after)
+    tests_file = REPOSITORY / "tests" / "__init__.py"
+    changed[tests_file] = changed[tests_file].replace(SCRIPT_NOTE, "")
+    pyproject = REPOSITORY / "pyproject.toml"
+    content, found = PROJECT_NAME.subn(
+        rf'\1"{new.replace("_", "-")}"', pyproject.read_text(encoding="utf-8")
+    )
+    if found != 1:
+        print("pyproject.toml does not start [project] with its name; nothing was changed")
+        return 1
+    changed[pyproject] = content
     for file, content in changed.items():
         file.write_text(content, encoding="utf-8")
     (REPOSITORY / old_domain).rename(REPOSITORY / new)
-    print(f"renamed {old_domain} to {new}; now run: uv run pytest")
+    print(f"renamed {old_domain} to {new}; now run: uv lock && uv run pytest")
     return 0
 
 
