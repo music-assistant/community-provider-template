@@ -65,9 +65,10 @@ Linux.
 4. **Run it.** Run the task **Run Music Assistant** (Terminal > Run Task) or `scripts/run.sh`, or
    press F5 to run it in the debugger. Open <http://localhost:8095>, create the first user, add
    your provider under Settings > Music sources and play a track in the web player; speakers in
-   your network usually cannot reach a server inside the container. When the server cannot load
-   the provider, its settings say why. Restart the server after a change to the code; delete
-   `.data/` to start over with an empty server. Without the container, on macOS or Linux with
+   your network usually cannot reach a server inside the container. When the provider is not
+   offered there, the output of the server says why; when it fails to start, its entry in the
+   settings shows the error. Restart the server after a change to the code; delete `.data/` to
+   start over with an empty server. Without the container, on macOS or Linux with
    [uv](https://docs.astral.sh/uv/) and ffmpeg 8 or newer: `uv sync`, then `scripts/run.sh`.
 5. **Test it.** `uv run pytest` checks the manifest, the texts, the requirements and the icon, and
    boots a real server that loads the provider and asks it for a track. For your own tests,
@@ -92,8 +93,9 @@ Linux.
 
 After admission, you release whenever you want: publish a GitHub release, and nothing else is
 needed. The registry looks for new releases once a night and offers each version to the server
-lines it passes on. When a release fails, or a version stops loading on a server line, you get an
-issue that mentions you, with the reason.
+lines it passes on. When a release fails, or a version stops loading on a server line, the
+registry opens an issue on its own repository that mentions you with the reason, and closes it by
+itself when a later release passes.
 [What the nightly test reports](https://developers.music-assistant.io/building-a-provider/#what-the-nightly-test-reports)
 has the details.
 
