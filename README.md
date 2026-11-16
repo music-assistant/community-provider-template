@@ -1,188 +1,110 @@
 # Music Assistant community provider template
 
-A provider adds something to [Music Assistant](https://music-assistant.io): a music source, support
-for a kind of player, a metadata source or a plugin. A **community provider** lives in its own
-repository, like this one, with its own documentation, support and releases. Music Assistant
-servers install it from the **community catalog**, a list the Music Assistant project keeps in the
-[registry](https://github.com/music-assistant/community-catalog). Being listed means the provider
-passed the checks and a person admitted what it does; it does not mean the project reviewed,
-tested or supports it. Users install community providers at their own risk.
+A community provider adds something to [Music Assistant](https://music-assistant.io) from a
+repository of its own, with its own documentation, support and releases. An administrator of a
+Music Assistant server installs it from the
+[community catalog](https://github.com/music-assistant/community-catalog).
 
-This template holds one small music source, `example_music`, that plays a few test tones without
-an account or network. It comes with a test that runs it in a real server, a development container
-and CI. Click **Use this template** on GitHub to start your own.
+This template holds a working music source, `example_music`, that plays a few test tones without
+an account or network, with its tests, a development container and CI.
 
 ## The rules
 
-The community catalog declines a provider at admission, and blocks it when it is found later,
-for:
+A registry maintainer accepts a provider once, for what it does. The community catalog declines a
+provider that gives access to music the user has no right to, downloads music to keep it, or harms
+the user, and blocks it when that is found later. The
+[community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md)
+say exactly what is and is not accepted.
 
-- music the user has no right to: getting around an account, a subscription tier or a region, or
-  a source that offers music without the permission of its rights holders;
-- getting around copy protection;
-- downloading or exporting music to keep it (a temporary cache used only for playback is fine);
-- harmful behaviour: sending the user's data anywhere but the service it connects to, loading
-  code from somewhere else while it runs, or doing things its description does not mention;
-- a provider that mainly exists to load other providers, or lists of sources from third parties,
-  from outside the community catalog.
-
-A small audience, an unofficial API used with the user's own account, reading a service's public
-web pages, and free public content in the quality a service offers without a subscription are all
-fine, at the user's own risk.
-
-A provider that talks to a music service also behaves as a good client of it: put a throttler in
-front of its API, cache what repeats instead of asking again, back off when the service asks you
-to wait, and never walk the service's catalogue for one user action (requests per album, track or
-page of a whole discography). Paging through the user's own library is fine. The
+A provider that talks to a music service is a good client of it: a throttler in front of its API,
+the cache for what repeats, no new requests while the service asks to wait, and no walking of the
+service's catalogue for one user action. The
 [developer guide of the server](https://github.com/music-assistant/server/blob/dev/DEVELOPMENT.md)
-explains these rules with the helpers that implement them.
+explains this with the helpers that do it.
 
-What a release has to look like:
-
-- the provider is in a folder named after its `domain`, the internal name in `manifest.json`;
-  a domain the server already uses is refused;
-- the release is a GitHub release, not a pre-release, whose tag is the version with or without
-  `v`, such as `v1.2.0`;
-- `requirements` in `manifest.json` are package names with version specifiers, such as
-  `aiohttp-retry==2.9.1`: no URLs, markers or options. They come as wheels for the Python version
-  and platform of the server: a package that only comes as source cannot be installed;
-- `manifest.json` is plain JSON: no `NaN` or `Infinity`, and no key twice;
-- `icon.svg` is optional, at most 5 KB and only draws (the
-  [icon rules](https://github.com/music-assistant/community-catalog#the-icon)); an icon that does
-  not pass is left out.
-
-## From template to a running provider
+## From template to a listed provider
 
 You need [Docker](https://www.docker.com/products/docker-desktop/) and
-[VS Code](https://code.visualstudio.com/) with the Dev Containers extension. Nothing else: no
-Python, no ffmpeg, on Windows, macOS or Linux.
+[VS Code](https://code.visualstudio.com/) with the Dev Containers extension, on Windows, macOS or
+Linux.
 
-1. Click **Use this template**, create your repository and open it in VS Code.
-2. Choose **Reopen in Container** when VS Code offers it. The first build downloads the server and
-   takes a few minutes.
-3. Give the provider its own domain, in the terminal of VS Code (lower case letters, digits and
-   underscores):
+1. **Use the template.** Click **Use this template**, create your repository and open it in
+   VS Code. Choose **Reopen in Container**; the first build downloads the server and takes a few
+   minutes.
+2. **Name your provider.** Its `domain` is the unique id of the provider in `manifest.json`, such
+   as `my_service`; it is not a domain name. It holds lower case letters, digits and underscores,
+   and no other provider may use it. In the terminal of VS Code:
 
-       uv run python scripts/rename.py my_service
+   ```sh
+   uv run python scripts/rename.py my_service
+   uv lock
+   ```
 
-   This renames the folder and sets the domain in `manifest.json`, the tests and the CI. A test
-   fails when these disagree, so a rename by hand is caught. It also names the project in
-   `pyproject.toml` after the domain, so run `uv lock` next. Then delete `docs/` and
-   `scripts/rename.py`; they belong to the template.
-4. In `my_service/manifest.json` and `strings.json`, set the name and description, your GitHub
-   handle in `codeowners` and the address of your documentation. Questions go to your repository;
-   add an `https://` link as `"support_url"` to take them elsewhere, such as its issues. `stage`
-   says how ready the provider is: `alpha`, `beta`, `stable` or `experimental`, and later
-   `unmaintained` or `deprecated` (a deprecated provider can no longer be added). Without it, the
-   server takes `stable`.
-5. Run the task **Run Music Assistant** (Terminal > Run Task), or `scripts/run.sh` in the
-   terminal. The server starts in dev mode and loads the provider from this repository. Press F5
-   instead to run it in the debugger.
-6. Open <http://localhost:8095>, create the first user, and add your provider under Settings >
-   Music sources. Its tracks show up in the library; play one in the web player of the app.
+   The script renames the folder and sets the domain in the manifest, the tests, the CI and
+   `pyproject.toml`. Then delete `docs/` and `scripts/rename.py`; they belong to the template.
+3. **Write it.** In `manifest.json` and `strings.json`, set the name, the description, your GitHub
+   handle in `codeowners` and the address of your documentation. The
+   [developer documentation](https://developers.music-assistant.io/building-a-provider/) explains
+   how to build a provider.
 
-Speakers in your network usually cannot reach a server inside the container; use the web player
-there. After a change to the code, restart the server. Its settings and library stay in `.data/`;
-delete that folder to start over.
+   | Path | What it is |
+   |---|---|
+   | `my_service/__init__.py` | The provider. Its comments show where the real work goes. |
+   | `my_service/manifest.json` | Its type, domain, name, code owners and requirements ([all fields](https://github.com/music-assistant/server/blob/dev/DEVELOPMENT.md#%EF%B8%8F-manifest-file)). |
+   | `my_service/strings.json` | Its texts in English: the name, the description and the labels of its settings. |
+   | `my_service/translations/` | Its texts in other languages the server has, such as `nl.json`. |
+   | `my_service/icon.svg` | Its icon. Optional, as are `icon_dark.svg` and `icon_monochrome.svg`. |
 
-Without the container, on macOS or Linux with [uv](https://docs.astral.sh/uv/) and ffmpeg 8 or
-newer: `uv sync`, then `scripts/run.sh`.
+   The server's annotated templates (`_demo_music_provider`, `_demo_player_provider` and
+   `_demo_plugin_provider` in
+   [`music_assistant/providers`](https://github.com/music-assistant/server/tree/dev/music_assistant/providers))
+   list every method you can implement. A provider that asks the user for a login or another value
+   adds a [setup flow](https://developers.music-assistant.io/setup-flows/). The provider runs inside
+   the user's server: it never blocks and never writes into its own folder, and its requirements
+   install next to the server's packages, so use the versions the server already has where you can.
+4. **Run it.** Run the task **Run Music Assistant** (Terminal > Run Task) or `scripts/run.sh`, or
+   press F5 to run it in the debugger. Open <http://localhost:8095>, create the first user, add
+   your provider under Settings > Music sources and play a track in the web player; speakers in
+   your network usually cannot reach a server inside the container. When the provider is not
+   offered there, the output of the server says why; when it fails to start, its entry in the
+   settings shows the error. Restart the server after a change to the code; delete `.data/` to
+   start over with an empty server. Without the container, on macOS or Linux with
+   [uv](https://docs.astral.sh/uv/) and ffmpeg 8 or newer: `uv sync`, then `scripts/run.sh`.
+5. **Test it.** `uv run pytest` checks the manifest, the texts, the requirements and the icon, and
+   boots a real server that loads the provider and asks it for a track. For your own tests,
+   `pytest_plugins = ["music_assistant.testing"]` in `tests/conftest.py` gives the fixture `mass`:
+   a started server that loads your repository, announces nothing on the network and listens only
+   on the local machine. What your provider asks of its service still goes out. Lint, type check
+   and spelling run on every commit once `uv run pre-commit install` has run (the container does
+   that). CI runs all of this and the checks the community catalog runs on every release. A check
+   that fails says exactly what is wrong;
+   [What a provider needs](https://github.com/music-assistant/community-catalog/blob/main/MAINTAINING.md#what-a-provider-needs)
+   lists the exact limits.
+6. **Publish a release:** a GitHub release, not a pre-release, whose tag is the version, such as
+   `v1.2.0`.
+7. **Submit it** with the form
+   [Submit a provider](https://github.com/music-assistant/community-catalog/issues/new?template=submit-provider.yml).
+   It needs a public repository with an open source licence and a release that passes the checks.
+   The owner of the repository or a code owner in the manifest of its latest release submits it.
+   The result of the checks appears as a comment on the issue; a registry maintainer then decides
+   once about what the provider does. The
+   [registry's README](https://github.com/music-assistant/community-catalog#admission) has the
+   details.
 
-## Write your provider
+After admission, you release whenever you want: publish a GitHub release, and nothing else is
+needed. The registry looks for new releases once a night and offers each version to the server
+lines it passes on. When a release fails, or a version stops loading on a server line, the
+registry opens an issue on its own repository that mentions you with the reason, and closes it by
+itself when a later release passes.
+[What the nightly test reports](https://developers.music-assistant.io/building-a-provider/#what-the-nightly-test-reports)
+has the details.
 
-| Path | What it is |
-|---|---|
-| `example_music/__init__.py` | The provider: `setup()` and the provider class. |
-| `example_music/manifest.json` | Its type, domain, name, maintainers and requirements. |
-| `example_music/strings.json` | Its texts in English: the name, the description and the labels of its settings. |
-| `example_music/translations/` | Its texts in other languages, here in Dutch. |
-| `example_music/icon.svg` | Its icon. Optional: `icon_dark.svg` and `icon_monochrome.svg`. |
-| `tests/` | The tests. |
-| `scripts/run.sh` | Starts the server with the provider. |
-| `.devcontainer/`, `.vscode/` | The development container, the task and the debugger. |
+## The server version
 
-The comments in `example_music/__init__.py` show where the real work goes. The server has an
-annotated template for each type of provider (`_demo_music_provider`, `_demo_player_provider`,
-`_demo_plugin_provider` in
-[`music_assistant/providers`](https://github.com/music-assistant/server/tree/dev/music_assistant/providers))
-that lists every method you can implement, and the built-in providers there are full examples.
-When the user has to enter something to set up the provider, such as a login, add a
-`setup_flow.py`: see [provider setup flows](https://developers.music-assistant.io/setup-flows/).
-
-A translation is named after a language the server has, such as `nl.json` or `pt_BR.json` (the
-[server's translations](https://github.com/music-assistant/server/tree/dev/music_assistant/translations)
-list them). English lives in `strings.json`; a `translations/en.json` is ignored. Only the texts in
-`strings.json` can be translated, such as the name, the description and the labels of the
-settings; the names of artists, albums and tracks cannot.
-
-The server measures the loudness of what it plays and adjusts it, unless the provider delivers its
-own level and says so by returning `True` from `delivers_normalized_audio`, as test tones do.
-
-## Where your code runs
-
-Once installed, the provider runs inside the user's Music Assistant server, in the same process as
-everything else. That has consequences:
-
-- **Never write into the provider folder.** The server checks the folder against the content hash
-  of the release and replaces it when it differs. Settings go through the server: options are
-  config entries (`get_config_entries`), what the setup flow collects is stored for you, values
-  that repeat go in the server's cache (`@use_cache`, `self.mass.cache`), and files go in a folder
-  of your own under `self.mass.storage_path` or `self.mass.cache_path`.
-- **Never block.** Music Assistant is async; wrap a blocking library call in `asyncio.to_thread`.
-- **Your requirements are installed next to the server's own packages** and never replace one. A
-  provider whose requirements clash with the server, or with another installed community
-  provider, is not loaded. Use the versions the server already has where you can.
-- **A server that cannot load your provider says why** in its settings, and keeps the settings of
-  its users.
-
-## Test
-
-    uv run pytest
-
-`tests/test_files.py` checks the manifest, the texts and their translations, the requirements and
-the icon without a server. `tests/test_provider.py` boots a real server with this repository as
-its local provider folder, adds the provider and asks it for a track. Add your own tests next to
-them. The fixture comes with the server: `pytest_plugins = ["music_assistant.testing"]` in
-`tests/conftest.py` gives a fixture `mass`, a started server in dev mode with your repository as
-its local provider folder. That server announces nothing on the network and listens only on the
-local machine; what your provider asks of its service still goes out, so replace that in a test
-where you need to. Lint, type check and spelling run on every commit once
-`uv run pre-commit install` has run (the container does that), and in CI.
-
-## Keep up with the server
-
-The server version you develop against is set in **one place**: the `music-assistant` line in
-`pyproject.toml`, with a release tag or a commit of the server after the `@`. To move to a newer
-server, change that line and run `uv lock`. The two packages listed under it are the requirements
-of the server's Sendspin provider, which the server starts at every boot; keep them at the
-versions in its `music_assistant/providers/sendspin/manifest.json`.
-
-Every night the registry tests the newest versions of every listed provider against each server line
-it tests (the nightly, the beta and the newest stable line). When your provider stops loading on one
-of them, servers of that line that run it switch to the newest version that still passes there, and
-you get an issue on your repository with the output. With a beta of several weeks you usually know
-well before a stable release.
-
-## Release
-
-Publish a GitHub release whose tag is the new version, such as `v1.2.0`. That is all: every night
-the registry takes the most recently published release, when it has not seen it before, runs its
-checks and offers the version to the servers it passed for. Of two releases published before it
-runs, only the newer one is taken. When it fails a check, you get an issue with the reason.
-Pre-releases are ignored; to offer a version to the nightly only, release it normally and it ends up
-where it passes.
-
-## Join the community catalog
-
-Submit your provider with the form
-[Submit a provider](https://github.com/music-assistant/community-catalog/issues/new?template=submit-provider.yml);
-the README of the [registry](https://github.com/music-assistant/community-catalog) has the details. It
-needs a public repository with an open source licence, a release that passes the checks, and a
-domain of its own. The person who submits it must own the repository or be a code owner in the
-manifest of its latest release. The result of the checks appears as a comment on the issue. When
-every check passes, a registry maintainer decides once about what the provider does, against the
-rules above. After that later releases are checked and offered without anyone looking at them. The
-owner of the repository and the code owners in the manifest are the maintainers of the provider.
+The server version you develop against is the `music-assistant` line in `pyproject.toml`: a release
+tag or a commit of the server after the `@`. To move to another, change that line and run
+`uv lock`. Keep the two packages listed under it at the versions in the server's
+`music_assistant/providers/sendspin/manifest.json`.
 
 ## Licence
 
