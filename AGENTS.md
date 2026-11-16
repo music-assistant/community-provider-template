@@ -2,7 +2,8 @@
 
 This repository is a community provider for Music Assistant, an async Python server that plays
 music from streaming services and libraries on the user's own speakers. Servers install it from the
-community catalog; the README has the rules of the catalog and how to develop, test and release.
+community catalog; the README links the rules of the catalog and says how to develop, test and
+release.
 
 ## Never write code that
 
