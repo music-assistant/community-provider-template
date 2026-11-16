@@ -174,12 +174,15 @@ where it passes.
 
 ## Join the community catalog
 
-Open a pull request on the [registry](https://github.com/music-assistant/community-catalog) that
-adds your provider; its README tells how. It needs a public repository with an open source licence,
-a release that passes the checks, and a domain of its own. Whoever opens the pull request, and every
-maintainer it names, must own the repository or be a code owner in the manifest of its latest
-release. A person then decides once about what the provider does, against the rules above. After
-that later releases are checked and offered without anyone looking at them.
+Submit your provider with the form
+[Submit a provider](https://github.com/music-assistant/community-catalog/issues/new?template=submit-provider.yml);
+the README of the [registry](https://github.com/music-assistant/community-catalog) has the details. It
+needs a public repository with an open source licence, a release that passes the checks, and a
+domain of its own. The person who submits it must own the repository or be a code owner in the
+manifest of its latest release. The result of the checks appears as a comment on the issue. When
+every check passes, a registry maintainer decides once about what the provider does, against the
+rules above. After that later releases are checked and offered without anyone looking at them. The
+owner of the repository and the code owners in the manifest are the maintainers of the provider.
 
 ## Licence
 
