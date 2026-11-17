@@ -38,11 +38,11 @@ jobs:
       - run: uv sync --locked
       - run: uv run pytest
 
-  # the checks every release gets in the catalog: the manifest, the requirements against a server
-  # line and loading the provider in the server image of that line
+  # the checks every release gets in the catalog: the manifest, the requirements against a
+  # channel and loading the provider in the server image of that channel
   catalog:
     name: Catalog checks
     uses: music-assistant/community-catalog/.github/workflows/check-provider.yml@main
     with:
       folder: example_music
-      server-line: nightly
+      channel: nightly

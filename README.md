@@ -92,10 +92,10 @@ Linux.
    details.
 
 After admission, you release whenever you want: publish a GitHub release, and nothing else is
-needed. The registry looks for new releases once a night and offers each version to the server
-lines it passes on. When a release fails, or a version stops loading on a server line, the
-registry opens an issue on its own repository that mentions you with the reason, and closes it by
-itself when a later release passes.
+needed. The registry looks for new releases once a night and offers each version to the channels
+it passes on: nightly, beta, and one per stable version such as stable 2.11. When a release fails,
+or a version stops loading on a channel, the registry opens an issue on its own repository that
+mentions you with the reason, and closes it by itself when a later release passes.
 [What the nightly test reports](https://developers.music-assistant.io/building-a-provider/#what-the-nightly-test-reports)
 has the details.
 
