@@ -12,7 +12,11 @@ from music_assistant_models.provider import ProviderManifest
 from music_assistant import providers
 from tests import DOMAIN, REPOSITORY
 
-PROVIDER = REPOSITORY / DOMAIN
+# where the community catalog and the server take the provider from: a folder named after its
+# domain, provider, or providers/<domain> in a repository with several providers
+FOLDERS = (REPOSITORY / DOMAIN, REPOSITORY / "provider", REPOSITORY / "providers" / DOMAIN)
+FOUND = [path for path in FOLDERS if (path / "manifest.json").is_file()]
+PROVIDER = FOUND[0] if FOUND else FOLDERS[0]
 # a package name with optional extras and version specifiers, as the server installs them
 REQUIREMENT = re.compile(
     r"[A-Za-z0-9][A-Za-z0-9._-]*(\[[A-Za-z0-9._, -]+\])?"
@@ -24,13 +28,16 @@ SERVER_TRANSLATIONS = Path(providers.__file__).parents[1] / "translations"
 SVG = "{http://www.w3.org/2000/svg}"
 
 
-def test_one_provider_named_after_its_domain() -> None:
-    """The provider folder, its manifest, the tests and the CI agree on the domain."""
-    folders = sorted(path.parent.name for path in REPOSITORY.glob("*/manifest.json"))
-    assert folders == [DOMAIN], f"expected one provider folder named {DOMAIN}, found {folders}"
+def test_one_provider_folder() -> None:
+    """The provider is in one folder the catalog takes it from; its manifest and the CI agree."""
+    found = [path.relative_to(REPOSITORY).as_posix() for path in FOUND]
+    assert len(found) == 1, (
+        f"expected the provider in one of {DOMAIN}, provider or providers/{DOMAIN}, found {found}"
+    )
+    folder = found[0]
     assert _manifest()["domain"] == DOMAIN
     ci = (REPOSITORY / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
-    assert f"folder: {DOMAIN}\n" in ci, "the folder in ci.yml is not the provider folder"
+    assert f"folder: {folder}\n" in ci, "the folder in ci.yml is not the provider folder"
 
 
 def test_domain_is_free() -> None:
