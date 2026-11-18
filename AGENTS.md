@@ -7,8 +7,9 @@ release.
 
 ## Never write code that
 
-- gets around an account, a subscription tier, a region, a service's limit of streams, or copy
-  protection;
+- gets around an account, a subscription tier, a region or a service's limit of streams, or gets
+  around copy protection to give more than the service's own app gives the user's account
+  (decoding protected audio with the user's own account to play it is fine);
 - downloads, exports or archives music, or writes audio of a service to disk;
 - hands a service's own audio address to anything outside the server (a media item, an API result
   or a route);
@@ -16,7 +17,13 @@ release.
   while the service asks to wait, or walks its catalogue for one user action;
 - sends the user's data anywhere but the service it connects to, loads code from somewhere else
   while it runs, or does something the manifest's description does not mention;
+- offers AI assistants tools (`mcp_tools`) whose description or results do more than describe the
+  tool and report what it did;
+- mainly exists to load other providers, or third-party lists of sources;
 - writes into the provider's own folder.
+
+The [community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md)
+have the full text.
 
 ## How to work here
 
