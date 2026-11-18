@@ -10,9 +10,8 @@ an account or network, with its tests, a development container and CI.
 
 ## The rules
 
-A registry maintainer accepts a provider once, for what it does. The community catalog declines a
-provider that gives access to music the user has no right to, downloads music to keep it, or harms
-the user, and blocks it when that is found later. The
+A registry maintainer accepts a provider once, for what it does. A provider may do what the
+service's own app does for the user's account, reverse engineering included, but never more. The
 [community catalog rules](https://github.com/music-assistant/.github/blob/main/COMMUNITY_CATALOG_RULES.md)
 say exactly what is and is not accepted.
 
@@ -41,7 +40,7 @@ Linux.
    ```
 
    The script renames the folder and sets the domain in the manifest, the tests, the CI and
-   `pyproject.toml`. Then delete `docs/` and `scripts/rename.py`; they belong to the template.
+   `pyproject.toml`. Then delete `scripts/rename.py`; it belongs to the template.
    The provider may also be in a folder named `provider`, or in `providers/my_service` in a
    repository with several providers; set `folder` in `.github/workflows/ci.yml` to that folder.
 3. **Write it.** In `manifest.json` and `strings.json`, set the name, the description, your GitHub
