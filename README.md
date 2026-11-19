@@ -44,7 +44,9 @@ Linux.
    The provider may also be in a folder named `provider`, or in `providers/my_service` in a
    repository with several providers; set `folder` in `.github/workflows/ci.yml` to that folder.
 3. **Write it.** In `manifest.json` and `strings.json`, set the name, the description, your GitHub
-   handle in `codeowners` and the address of your documentation. The
+   handle in `codeowners` and the address of your documentation. List in `media_types` what the
+   provider offers whatever its settings, such as `track` or `radio`: the app labels it with them
+   in Settings and the Marketplace, also before it is installed. The
    [developer documentation](https://developers.music-assistant.io/building-a-provider/) explains
    how to build a provider.
 
