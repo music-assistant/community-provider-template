@@ -35,7 +35,8 @@ have the full text.
   cannot be installed.
 - `media_types` in `manifest.json` lists the media types the provider offers whatever its config:
   the media type of each `LIBRARY_*` feature, plus what only search or browse delivers, such as
-  `radio`. Keep it in line with the features, and leave out what depends on the config or account.
+  `radio`; a plugin that plays audio into Music Assistant lists `audio_source`. Keep it in line
+  with the features, and leave out what depends on the config or account.
 - Follow the server's code style: Sphinx docstrings with `:param:`, the summary of a multi-line
   docstring on the line after the quotes, comments only where the code is not obvious.
 - The server pin is the `music-assistant` line in `pyproject.toml`; change it only when asked.
