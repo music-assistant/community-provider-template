@@ -41,8 +41,8 @@ if TYPE_CHECKING:
     from music_assistant.mass import MusicAssistant
     from music_assistant.models import ProviderInstanceType
 
-# media_types in manifest.json lists the media types of the LIBRARY_* features, plus those only
-# search or browse delivers; leave out what depends on the config or account
+# these features decide what the provider does; provides in manifest.json is for discovery
+# only: the media types it offers whatever the config or account
 SUPPORTED_FEATURES = {
     ProviderFeature.BROWSE,
     ProviderFeature.SEARCH,

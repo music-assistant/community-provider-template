@@ -33,10 +33,11 @@ have the full text.
 - Requirements in `manifest.json` are package names with version specifiers only, and come as
   wheels for the Python version and platform of the server: a package that only comes as source
   cannot be installed.
-- `media_types` in `manifest.json` lists the media types the provider offers whatever its config:
-  the media type of each `LIBRARY_*` feature, plus what only search or browse delivers, such as
-  `radio`; a plugin that plays audio into Music Assistant lists `audio_source`. Keep it in line
-  with the features, and leave out what depends on the config or account.
+- `provides` in `manifest.json` is for discovery only, such as the filters of the Marketplace;
+  what the provider does always comes from its code. A music provider lists the media types it
+  offers whatever its config or account (`artist`, `album`, `track`, `playlist`, `radio`,
+  `podcast`, `audiobook`, `sound_effect`); a plugin lists its main features (`audio_source`, `ai`,
+  `tts`, `scrobble`, `assistant`, `visualizer`, `recommendations`, `fun`).
 - Follow the server's code style: Sphinx docstrings with `:param:`, the summary of a multi-line
   docstring on the line after the quotes, comments only where the code is not obvious.
 - The server pin is the `music-assistant` line in `pyproject.toml`; change it only when asked.
