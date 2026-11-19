@@ -41,6 +41,8 @@ Linux.
 
    The script renames the folder and sets the domain in the manifest, the tests, the CI and
    `pyproject.toml`. Then delete `scripts/rename.py`; it belongs to the template.
+   The provider may also be in a folder named `provider`, or in `providers/my_service` in a
+   repository with several providers; set `folder` in `.github/workflows/ci.yml` to that folder.
 3. **Write it.** In `manifest.json` and `strings.json`, set the name, the description, your GitHub
    handle in `codeowners` and the address of your documentation. The
    [developer documentation](https://developers.music-assistant.io/building-a-provider/) explains
