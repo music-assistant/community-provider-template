@@ -692,7 +692,7 @@ dev = [
     { name = "aiosendspin", extras = ["server"], specifier = "==10.3.0" },
     { name = "av", specifier = "==19.0.2" },
     { name = "codespell", specifier = "==2.4.3" },
-    { name = "music-assistant", git = "https://github.com/music-assistant/server?rev=1c8a63308dfed7f4f940fa6314bf4c2adf56b44b" },
+    { name = "music-assistant", git = "https://github.com/music-assistant/server?rev=126c6d646ec14ee680e7051258e82dab0a09bac2" },
     { name = "mypy", specifier = "==2.3.0" },
     { name = "pre-commit", specifier = "==4.6.2" },
     { name = "pytest", specifier = "==9.1.1" },
@@ -1439,7 +1439,7 @@ wheels = [
 [[package]]
 name = "music-assistant"
 version = "0.0.0"
-source = { git = "https://github.com/music-assistant/server?rev=1c8a63308dfed7f4f940fa6314bf4c2adf56b44b#1c8a63308dfed7f4f940fa6314bf4c2adf56b44b" }
+source = { git = "https://github.com/music-assistant/server?rev=126c6d646ec14ee680e7051258e82dab0a09bac2#126c6d646ec14ee680e7051258e82dab0a09bac2" }
 dependencies = [
     { name = "aiodns" },
     { name = "aiofiles" },
@@ -1486,24 +1486,24 @@ dependencies = [
 
 [[package]]
 name = "music-assistant-frontend"
-version = "2.17.370"
-source = { url = "https://github.com/music-assistant/frontend/releases/download/2.17.370/music_assistant_frontend-2.17.370-py3-none-any.whl" }
+version = "2.17.374"
+source = { url = "https://github.com/music-assistant/frontend/releases/download/2.17.374/music_assistant_frontend-2.17.374-py3-none-any.whl" }
 wheels = [
-    { url = "https://github.com/music-assistant/frontend/releases/download/2.17.370/music_assistant_frontend-2.17.370-py3-none-any.whl", hash = "sha256:03a116c5a6433ddb94864971e7a2aa9a57aaba7f4b958b2fda796ff8ae6a7a42" },
+    { url = "https://github.com/music-assistant/frontend/releases/download/2.17.374/music_assistant_frontend-2.17.374-py3-none-any.whl", hash = "sha256:540c8534fa44ee42a9e624885f266fefac7f18e2048f7b775f13217ec8268e60" },
 ]
 
 [[package]]
 name = "music-assistant-models"
-version = "1.1.240"
+version = "1.1.246"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
     { name = "mashumaro" },
     { name = "orjson" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ae/58/a020036b88a6f9b454b0b80afeaa4c7e64ca8dec00b3ced548bb42ea4115/music_assistant_models-1.1.240.tar.gz", hash = "sha256:ea4199bb59a54ec1aa10b43666237b0547f2dd50f7387fec5255d2fd2d586542", size = 119332, upload-time = "2026-11-15T02:13:57.423Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cc/b7/84a1b9045597b4bc8668b694c1e5373d647cbd9b833f5c244e944241366f/music_assistant_models-1.1.246.tar.gz", hash = "sha256:970c83a304927c31f8d96ef154422da086225ab83e5e82ca1532b5f76c0232f2", size = 125203, upload-time = "2026-11-18T21:59:58.097Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/59/2d/5f908c66a1b20c24d068fdc7607ac1dedbfbaeb5b89c37823a6190d76c90/music_assistant_models-1.1.240-py3-none-any.whl", hash = "sha256:a6d1e6b3228619c69b02717b9e88150eb4feb5f18771e49cb75bdd785d97fa8f", size = 89510, upload-time = "2026-11-15T02:13:56.046Z" },
+    { url = "https://files.pythonhosted.org/packages/16/d3/6705104a4bd01c4ee45a605203dda64aa963351ec0dc5857475d5d4662dd/music_assistant_models-1.1.246-py3-none-any.whl", hash = "sha256:3033c586c0a1a5c6e5b3cc9a0f0af69e0e42546341c6e5ace27e79fc8ebd94e0", size = 92095, upload-time = "2026-11-18T21:59:56.728Z" },
 ]
 
 [[package]]
@@ -2053,14 +2053,14 @@ wheels = [
 
 [[package]]
 name = "python-slugify"
-version = "9.1.1"
+version = "9.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "text-unidecode" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a7/a6/c1c00c174f50edd6e9d244d97c6377191fd1f93fd76841f9e3d46073be2f/python_slugify-9.1.1.tar.gz", hash = "sha256:db48547ed6d43072af59c86c3bc80bfc3c6f4e88c130c99de11775d721a574b8", size = 64108, upload-time = "2026-09-22T15:54:17.041Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/bd/e8/26b1af09d728d604dc16427a39f53985b22a170dbd61addac3f48db73f03/python_slugify-9.1.3.tar.gz", hash = "sha256:90e997f2e0987239ce95e12f700086eb18e1d1d3ee22624fbbdbd095afca42b6", size = 66093, upload-time = "2026-10-07T01:06:20.101Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/86/9a0b95c7e0db6f8ed85c7d726da4bf4853b25f0de244f075e29b91fd167b/python_slugify-9.1.1-py3-none-any.whl", hash = "sha256:6db0d9480b22a8867e2dbd725e0eea28e7893ee1dc00bdae467b345ad0eafafb", size = 15760, upload-time = "2026-09-22T15:54:16.065Z" },
+    { url = "https://files.pythonhosted.org/packages/47/67/5598c98725332a6a4084c7b622d5a1ebe7d6745c1d2f434c9e4e89e04cba/python_slugify-9.1.3-py3-none-any.whl", hash = "sha256:9aced0670e54c5603e2335c0fa9a4011ad4bc41ecb3c46e8097294c46fd60ed4", size = 16032, upload-time = "2026-10-07T01:06:18.891Z" },
 ]
 
 [[package]]
