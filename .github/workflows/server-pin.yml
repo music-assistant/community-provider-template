@@ -1,9 +1,9 @@
 name: Server pin
 
 # Moves the server the provider is developed against to a newer release of the server, with
-# scripts/server_pin.py, and pushes that to main once the type check and the tests pass on it.
-# The server starts it in the template after each nightly and beta; start it by hand under
-# Actions. A move that fails opens an issue, which the next move that passes closes.
+# scripts/server_pin.py, and pushes that to the default branch once the type check and the tests
+# pass on it. The server starts it in the template after each nightly and beta; start it by hand
+# under Actions. A move that fails its checks opens an issue, which the next move closes.
 
 on:
   repository_dispatch:
@@ -31,30 +31,37 @@ jobs:
       contents: write
       issues: write
     env:
-      GH_TOKEN: ${{ github.token }}
+      BRANCH: ${{ github.event.repository.default_branch }}
       VERSION: ${{ github.event.client_payload.server_version || inputs.version }}
       ISSUE_TITLE: The provider does not pass on the newest server
     steps:
+      # the branch as it is now, with the pin an earlier run may just have moved
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event.repository.default_branch }}
           persist-credentials: false
       - name: Check that the release is newer than the pin
         id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(b[0-9]+|rc[0-9]+|\.dev[0-9]+)?$ ]]; then
             echo "::error::'$VERSION' is not a release of the server, such as 2.11.0"
             exit 1
           fi
           pin=$(sed -nE 's|.*"music-assistant @ git\+https://github\.com/music-assistant/server@([^"]+)".*|\1|p' pyproject.toml)
-          # behind or diverged: an older release, or one of a release branch instead of dev
-          status=$(gh api "repos/music-assistant/server/compare/$pin...$VERSION" --jq .status)
-          echo "$VERSION is $status of the pin $pin"
-          if [ "$status" = ahead ]; then
+          # newer than the pin, and a release of dev rather than of a release branch
+          newer=$(gh api "repos/music-assistant/server/compare/$pin...$VERSION" --jq .status)
+          dev=$(gh api "repos/music-assistant/server/compare/$VERSION...dev" --jq .status)
+          echo "$VERSION is $newer of the pin $pin; dev is $dev of $VERSION"
+          if [ "$newer" = ahead ] && { [ "$dev" = ahead ] || [ "$dev" = identical ]; }; then
             echo "move=true" >> "$GITHUB_OUTPUT"
           fi
       - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         if: steps.release.outputs.move == 'true'
+      # runs the code of the new server, so it gets no token
       - name: Move the pin and check the provider
+        id: check
         if: steps.release.outputs.move == 'true'
         run: |
           uv run --no-project --python 3.14 python scripts/server_pin.py "$VERSION"
@@ -62,33 +69,39 @@ jobs:
           uv sync --locked
           uv run mypy
           uv run pytest
+      # a branch that moved meanwhile refuses the push; the next release tries again
       - name: Push the move
         if: steps.release.outputs.move == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -am "Develop against server $VERSION"
-          git pull --rebase origin main
-          git push "https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git" HEAD:main
+          git push "https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git" "HEAD:$BRANCH"
       - name: Close the issue of a failed move
         if: steps.release.outputs.move == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --json number,title \
-            --jq '[.[] | select(.title == env.ISSUE_TITLE)][0].number // empty')
+          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --app github-actions \
+            --json number,title --jq '[.[] | select(.title == env.ISSUE_TITLE)][0].number // empty')
           if [ -n "$number" ]; then
             gh issue close "$number" --repo "$GITHUB_REPOSITORY" \
               --comment "Server $VERSION passes; the pin moved to it."
           fi
-      - name: Report the failed move in an issue
-        if: failure() && steps.release.outputs.move == 'true'
+      - name: Report the failed checks in an issue
+        if: failure() && steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           run="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --json number,title \
-            --jq '[.[] | select(.title == env.ISSUE_TITLE)][0].number // empty')
+          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --app github-actions \
+            --json number,title --jq '[.[] | select(.title == env.ISSUE_TITLE)][0].number // empty')
           if [ -n "$number" ]; then
             gh issue comment "$number" --repo "$GITHUB_REPOSITORY" \
               --body "Server $VERSION fails too: $run"
           else
             gh issue create --repo "$GITHUB_REPOSITORY" --title "$ISSUE_TITLE" \
-              --body "Moving the server pin to $VERSION failed: $run. The pin stays where it is; the next release that passes moves it and closes this issue."
+              --body "Moving the server pin to $VERSION failed its checks: $run. The pin stays where it is; the next release that passes moves it and closes this issue."
           fi
