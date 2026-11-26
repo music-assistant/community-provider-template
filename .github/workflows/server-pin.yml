@@ -68,7 +68,7 @@ jobs:
         run: |
           uv run --no-project --python 3.14 python scripts/server_pin.py "$VERSION"
           uv lock
-      # handed over before the code of the new requirements runs; the push still waits for the checks
+      # handed over before the new requirements run any code; the push still waits for the checks
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: steps.release.outputs.move == 'true'
         with:
