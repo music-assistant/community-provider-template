@@ -20,11 +20,8 @@ PYPROJECT = Path(__file__).parents[1] / "pyproject.toml"
 VERSION = re.compile(r"\d+\.\d+\.\d+(?:b\d+|rc\d+|\.dev\d+)?")
 # what follows the @ of the server line
 PIN = re.compile(r'(?<="music-assistant @ git\+https://github\.com/music-assistant/server@)[^"]+')
-# the Sendspin requirements: the lines between their comment and the next comment
-SENDSPIN = re.compile(
-    r"(?<=# music_assistant/providers/sendspin/manifest\.json of the server\n)"
-    r'(?:  "[^"\n]+",\n)*(?=  #)'
-)
+# the requirements in the sendspin dependency group
+SENDSPIN = re.compile(r'(?<=^sendspin = \[\n)(?:  "[^"\n]+",\n)*(?=\]$)', re.MULTILINE)
 MANIFEST = (
     "https://raw.githubusercontent.com/music-assistant/server/{}/"
     "music_assistant/providers/sendspin/manifest.json"

@@ -684,6 +684,10 @@ dev = [
     { name = "pytest-timeout" },
     { name = "ruff" },
 ]
+sendspin = [
+    { name = "aiosendspin", extra = ["server"] },
+    { name = "av" },
+]
 
 [package.metadata]
 
@@ -699,6 +703,10 @@ dev = [
     { name = "pytest-aiohttp", specifier = "==1.1.1" },
     { name = "pytest-timeout", specifier = "==2.4.0" },
     { name = "ruff", specifier = "==0.16.5" },
+]
+sendspin = [
+    { name = "aiosendspin", extras = ["server"], specifier = "==10.3.0" },
+    { name = "av", specifier = "==19.0.2" },
 ]
 
 [[package]]
