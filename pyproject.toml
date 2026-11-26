@@ -9,12 +9,9 @@ dependencies = []
 [dependency-groups]
 dev = [
   # the server version this provider is developed against: a release tag or a commit after the @;
-  # change it and run `uv lock` to move to another
+  # scripts/server_pin.py moves it to a release, with the sendspin group below
   "music-assistant @ git+https://github.com/music-assistant/server@126c6d646ec14ee680e7051258e82dab0a09bac2",
-  # the requirements of the server's Sendspin provider, which it starts at every boot; they follow
-  # music_assistant/providers/sendspin/manifest.json of the server
-  "aiosendspin[server]==10.3.0",
-  "av==19.0.2",
+  {include-group = "sendspin"},
   "codespell==2.4.3",
   "mypy==2.3.0",
   "pre-commit==4.6.2",
@@ -22,6 +19,12 @@ dev = [
   "pytest-aiohttp==1.1.1",
   "pytest-timeout==2.4.0",
   "ruff==0.16.5",
+]
+# the requirements of the server's Sendspin provider, which it starts at every boot, as in
+# music_assistant/providers/sendspin/manifest.json of the server; scripts/server_pin.py copies them
+sendspin = [
+  "aiosendspin[server]==10.3.0",
+  "av==19.0.2",
 ]
 
 [tool.uv]

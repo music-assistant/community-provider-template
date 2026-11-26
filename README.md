@@ -107,9 +107,10 @@ has the details.
 ## The server version
 
 The server version you develop against is the `music-assistant` line in `pyproject.toml`: a release
-tag or a commit of the server after the `@`. To move to another, change that line and run
-`uv lock`. Keep the two packages listed under it at the versions in the server's
-`music_assistant/providers/sendspin/manifest.json`.
+tag or a commit of the server after the `@`. To move to a release, run
+`uv run python scripts/server_pin.py 2.11.0` and then `uv lock`; the script also copies the
+requirements of the server's Sendspin provider, which the server starts at every boot. The
+workflow **Server pin** under Actions does the same, and pushes the move once the checks pass.
 
 ## Licence
 

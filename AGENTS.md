@@ -40,4 +40,5 @@ have the full text.
   `tts`, `scrobble`, `assistant`, `visualizer`, `recommendations`, `fun`).
 - Follow the server's code style: Sphinx docstrings with `:param:`, the summary of a multi-line
   docstring on the line after the quotes, comments only where the code is not obvious.
-- The server pin is the `music-assistant` line in `pyproject.toml`; change it only when asked.
+- The server pin is the `music-assistant` line in `pyproject.toml`; change it only when asked,
+  with `scripts/server_pin.py`.
