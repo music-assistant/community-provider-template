@@ -21,11 +21,11 @@ wheels = [
 
 [[package]]
 name = "aiofiles"
-version = "24.1.0"
+version = "25.1.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0b/03/a88171e277e8caa88a4c77808c20ebb04ba74cc4681bf1e9416c862de237/aiofiles-24.1.0.tar.gz", hash = "sha256:22a075c9e5a3810f0c2e48f3008c94d68c65d763b9b03857924c99e57355166c", size = 30247, upload-time = "2024-06-24T11:02:03.584Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/c3/534eac40372d8ee36ef40df62ec129bee4fdb5ad9706e58a29be53b2c970/aiofiles-25.1.0.tar.gz", hash = "sha256:a8d728f0a29de45dc521f18f07297428d56992a742f0cd2701ba86e44d23d5b2", size = 46354, upload-time = "2025-10-09T20:51:04.358Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a5/45/30bb92d442636f570cb5651bc661f52b610e2eec3f891a5dc3a4c3667db0/aiofiles-24.1.0-py3-none-any.whl", hash = "sha256:b4ec55f4195e3eb5d7abd1bf7e061763e864dd4954231fb8539a0ef8bb8260e5", size = 15896, upload-time = "2024-06-24T11:02:01.529Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/8a/340a1555ae33d7354dbca4faa54948d76d89a27ceef032c8c3bc661d003e/aiofiles-25.1.0-py3-none-any.whl", hash = "sha256:abe311e527c862958650f9438e859c1fa7568a141b22abcd015e120e86a85695", size = 14668, upload-time = "2025-10-09T20:51:03.174Z" },
 ]
 
 [[package]]
@@ -183,7 +183,7 @@ source = { git = "https://github.com/music-assistant/aiolibdatachannel?rev=feat%
 
 [[package]]
 name = "aiosendspin"
-version = "10.3.0"
+version = "11.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -194,9 +194,9 @@ dependencies = [
     { name = "orjson" },
     { name = "zeroconf" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/58/52/0cb424956fa11962b0406b03b228c918c063d6dc020c850174b5109aebf0/aiosendspin-10.3.0.tar.gz", hash = "sha256:522b8d1ba65f0d66c962a393cf255df0fecd8045ff80a99930cb9eb7d2c5dffc", size = 352205, upload-time = "2026-11-02T15:30:42.299Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/64/78/9e80d84b23db751814812fbcac538322ba94ef0f1b43dd184993c5ffcc1d/aiosendspin-11.0.0.tar.gz", hash = "sha256:bcc9c994cb426f260547eefab35fa5736d965fa7125caa97337299887422e0db", size = 367707, upload-time = "2026-11-23T18:21:05.073Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/df/5f/96297d664cd42f1450e6ecb27ea412a687606f495900c7422644c9faec55/aiosendspin-10.3.0-py3-none-any.whl", hash = "sha256:1c5b39221c2912792bdf25c1c6a115814d02f36232d174cb5927b15bdd43dff6", size = 360157, upload-time = "2026-11-02T15:30:40.473Z" },
+    { url = "https://files.pythonhosted.org/packages/42/91/bfffa1deb0104d80dfc97dd1d58da032627f48f9ca8a798d7d3a9c63e2d5/aiosendspin-11.0.0-py3-none-any.whl", hash = "sha256:a2cf7a5a659bdcff1395d97ba69ab1082bc750173f90804967e56bae2dcecf96", size = 375234, upload-time = "2026-11-23T18:21:03.838Z" },
 ]
 
 [package.optional-dependencies]
@@ -686,10 +686,10 @@ sendspin = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "aiosendspin", extras = ["server"], specifier = "==10.3.0" },
+    { name = "aiosendspin", extras = ["server"], specifier = "==11.0.0" },
     { name = "av", specifier = "==19.0.2" },
     { name = "codespell", specifier = "==2.4.3" },
-    { name = "music-assistant", git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112503" },
+    { name = "music-assistant", git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112703" },
     { name = "mypy", specifier = "==2.3.0" },
     { name = "pre-commit", specifier = "==4.6.2" },
     { name = "pytest", specifier = "==9.1.1" },
@@ -699,7 +699,7 @@ dev = [
     { name = "soxr", specifier = "==1.1.0" },
 ]
 sendspin = [
-    { name = "aiosendspin", extras = ["server"], specifier = "==10.3.0" },
+    { name = "aiosendspin", extras = ["server"], specifier = "==11.0.0" },
     { name = "av", specifier = "==19.0.2" },
     { name = "soxr", specifier = "==1.1.0" },
 ]
@@ -1452,7 +1452,7 @@ wheels = [
 [[package]]
 name = "music-assistant"
 version = "0.0.0"
-source = { git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112503#182a4ae8c8958b0d61ebfe4c3dda1c74bc1c423f" }
+source = { git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112703#53e80354415844f5cefe0f2383b7361aca9ef149" }
 dependencies = [
     { name = "aiodns" },
     { name = "aiofiles" },
@@ -1499,24 +1499,24 @@ dependencies = [
 
 [[package]]
 name = "music-assistant-frontend"
-version = "2.17.381"
-source = { url = "https://github.com/music-assistant/frontend/releases/download/2.17.381/music_assistant_frontend-2.17.381-py3-none-any.whl" }
+version = "2.17.383"
+source = { url = "https://github.com/music-assistant/frontend/releases/download/2.17.383/music_assistant_frontend-2.17.383-py3-none-any.whl" }
 wheels = [
-    { url = "https://github.com/music-assistant/frontend/releases/download/2.17.381/music_assistant_frontend-2.17.381-py3-none-any.whl", hash = "sha256:0ffd74dc92f160b965f34a3770420235a717e6fda89a0caa2fff880fe02e648d" },
+    { url = "https://github.com/music-assistant/frontend/releases/download/2.17.383/music_assistant_frontend-2.17.383-py3-none-any.whl", hash = "sha256:1b0390f4e27bcd4d0c025e6948ed8ca19bc1d35362c9114dac743efad09e7d60" },
 ]
 
 [[package]]
 name = "music-assistant-models"
-version = "1.1.250"
+version = "1.1.253"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
     { name = "mashumaro" },
     { name = "orjson" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c0/1e/21eaaca59506962b21290480e08b8731d523081c203a154022a2abca5819/music_assistant_models-1.1.250.tar.gz", hash = "sha256:21a137a1d7fbbce2b24e14320cedf7c87b79556ec4854d931fd22b1b122c6939", size = 126506, upload-time = "2026-11-24T02:14:16.242Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5a/5a/d6c98970bbb7768a8cfe6dd81d3319f6a3385078afd9b9934dbfff827af9/music_assistant_models-1.1.253.tar.gz", hash = "sha256:d8ba49b61057b9a0e0f0f9a4b90ef9bcc6163b1931b7ae823dbf186114e9183f", size = 127073, upload-time = "2026-11-27T02:14:06.063Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/dc/ab/91933690a096bc45d8a4edc4e7caf8fc29fc0a94f457d4d475467a6c93c0/music_assistant_models-1.1.250-py3-none-any.whl", hash = "sha256:db3ba43c50c2913538ec50f402e2089568cfcd2425ecb962065fe1538e4a8b82", size = 93051, upload-time = "2026-11-24T02:14:15.056Z" },
+    { url = "https://files.pythonhosted.org/packages/59/39/aa8b3a20c5bcf881be63a6a895d6f51dfd61fc4277e3463108f7cdeb972b/music_assistant_models-1.1.253-py3-none-any.whl", hash = "sha256:329c2c83dca2cb88934b5a26ecf02d91eae72289864289b922732ac0c38b252e", size = 93378, upload-time = "2026-11-27T02:14:04.997Z" },
 ]
 
 [[package]]
