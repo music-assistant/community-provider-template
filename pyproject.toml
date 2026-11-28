@@ -10,7 +10,7 @@ dependencies = []
 dev = [
   # the server version this provider is developed against: a release tag or a commit after the @;
   # scripts/server_pin.py moves it to a release, with the sendspin group below
-  "music-assistant @ git+https://github.com/music-assistant/server@2.11.0.dev2026112703",
+  "music-assistant @ git+https://github.com/music-assistant/server@2.11.0.dev2026112803",
   {include-group = "sendspin"},
   "codespell==2.4.3",
   "mypy==2.3.0",

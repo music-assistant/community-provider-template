@@ -689,7 +689,7 @@ dev = [
     { name = "aiosendspin", extras = ["server"], specifier = "==11.0.0" },
     { name = "av", specifier = "==19.0.2" },
     { name = "codespell", specifier = "==2.4.3" },
-    { name = "music-assistant", git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112703" },
+    { name = "music-assistant", git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112803" },
     { name = "mypy", specifier = "==2.3.0" },
     { name = "pre-commit", specifier = "==4.6.2" },
     { name = "pytest", specifier = "==9.1.1" },
@@ -1452,7 +1452,7 @@ wheels = [
 [[package]]
 name = "music-assistant"
 version = "0.0.0"
-source = { git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112703#53e80354415844f5cefe0f2383b7361aca9ef149" }
+source = { git = "https://github.com/music-assistant/server?rev=2.11.0.dev2026112803#ed10f3b5e234e3dc34eb3871e464f0d61c240f17" }
 dependencies = [
     { name = "aiodns" },
     { name = "aiofiles" },
@@ -1499,24 +1499,24 @@ dependencies = [
 
 [[package]]
 name = "music-assistant-frontend"
-version = "2.17.383"
-source = { url = "https://github.com/music-assistant/frontend/releases/download/2.17.383/music_assistant_frontend-2.17.383-py3-none-any.whl" }
+version = "2.17.384"
+source = { url = "https://github.com/music-assistant/frontend/releases/download/2.17.384/music_assistant_frontend-2.17.384-py3-none-any.whl" }
 wheels = [
-    { url = "https://github.com/music-assistant/frontend/releases/download/2.17.383/music_assistant_frontend-2.17.383-py3-none-any.whl", hash = "sha256:1b0390f4e27bcd4d0c025e6948ed8ca19bc1d35362c9114dac743efad09e7d60" },
+    { url = "https://github.com/music-assistant/frontend/releases/download/2.17.384/music_assistant_frontend-2.17.384-py3-none-any.whl", hash = "sha256:600a447adc0eb41b19c8d7c15292f75355e50daca2893b3adf5f3327fe31aab7" },
 ]
 
 [[package]]
 name = "music-assistant-models"
-version = "1.1.253"
+version = "1.1.254"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyascii" },
     { name = "mashumaro" },
     { name = "orjson" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5a/5a/d6c98970bbb7768a8cfe6dd81d3319f6a3385078afd9b9934dbfff827af9/music_assistant_models-1.1.253.tar.gz", hash = "sha256:d8ba49b61057b9a0e0f0f9a4b90ef9bcc6163b1931b7ae823dbf186114e9183f", size = 127073, upload-time = "2026-11-27T02:14:06.063Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/50/cc/051a3a5183c0d06471666826a84f9454a73a31eba3767a7aab328e9f82f3/music_assistant_models-1.1.254.tar.gz", hash = "sha256:288b4616ae83e7706c2fcae38fcb994fc7136f12c799360665aec584816da4ef", size = 127146, upload-time = "2026-11-27T13:38:11.255Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/59/39/aa8b3a20c5bcf881be63a6a895d6f51dfd61fc4277e3463108f7cdeb972b/music_assistant_models-1.1.253-py3-none-any.whl", hash = "sha256:329c2c83dca2cb88934b5a26ecf02d91eae72289864289b922732ac0c38b252e", size = 93378, upload-time = "2026-11-27T02:14:04.997Z" },
+    { url = "https://files.pythonhosted.org/packages/72/78/cb12dc849221d1d9dc3855c66b32b422d34a09cc6595f616aa6b3a51798a/music_assistant_models-1.1.254-py3-none-any.whl", hash = "sha256:2d8b89c24c5d8cfefff84dbece697601d512f327e99d7c11cf361a436af7e644", size = 93461, upload-time = "2026-11-27T13:38:09.569Z" },
 ]
 
 [[package]]
